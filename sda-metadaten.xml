@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Entwurf eine &quot;BASIS-MetadatenSets&quot; für das folgende Fallbeispiel: 
+     Kunde z.B. Professor bringt Forschungsdaten auf einem externen Laufwerk oder USB-Stick ins URZ, von denen die Struktur nicht bekannt ist oder nicht dokumentiert werden soll. Er wird technisch und organisatorisch 
+     über die getroffenen Maßnahmen für die Langzeitarchivierung aufgeklärt und unterschreibt darüber getroffene Vereinbarungen und das Archivgut wird vom URZ als BLOB im ISO-Format (bei CDs oder DVDs) oder 
+     als Disc-Image entsprechend gespeichert. -->
+<!-- Fall1 ISO-Image: unten beschrieben --> 
+<!-- Fall2 Archiv: Der Benutzer liefert seine Daten als TAR- oder ZIP-Archiv ab, also die gesamte Struktur in einer gemeinsamen Datei. Dieser Fall ist äquivalent zum ISO-Image zu betrachten. -->
+<!-- Fall3 Festplatte: Verfahren bei Festplatten: Bei externen Festplatten sind mittlerweile Kapazitäten im zweistelligen Terabytebereich erhält. Ist aber oft nur ein Bruchteil genutzt - hier bietet es sich 
+     an beim Diskdump nur den beschriebenen Teil zu sichern. Daher ist ein Komprimierungsverfahren beim Ablegen des Archivguts empfehlenswert. Es sind daher aufzunehmen die Größe des ursprünglichen Mediums als 
+     Bruttowert und als Hinweis optional, falls ermittelbar, das Dateisystem des zu archivierenden Datenträgers. Man bräuchte in diesem Fall die Checksum des vollständigen Images, als auch die der 
+     komprimierten Version. Das exakte Verfahren wie das Image erzeugt wird ist nicht Teil dieses Dokuments. -->
+<!-- Vorbereitende Maßnahmen für Fall3: Dateisystem wurde auf Fehlerfreiheit überprüft bzw. repariert. Es ist defragmentiert und für eine optimale Kompremierung ist der leere Platz mit Nullen beschrieben. Diese 
+     Maßnahmen müssen vor der Anlieferung von den Kunden übernommen werden. -->
+<!-- Fall 3a: Der Kunde bringt die Festplatte mit und der Dienstbetreuer des Rechenzentrums fasst diese zu einem tar- oder winzip-Archiv zusammen. Das weitere Vorgehen ist im Fall2 geregelt. -->
+
+<!-- Im METS-Profil (siehe dazu &quot;PROFILE&quot;) sollte angelegt und angeben werden. Darin ist sollte zu finden sein welche Tools oder Validierungs-Skripts verwendet werden.
+     &quot;A profile should provide a description of any affiliated tools, including validators, stylesheets, 
+     authoring tools, rendering applications, which can or should be used with METS documents conforming 
+     to the profile.&quot; &quot;The optional tests subelement of description exists to supplement a textual 
+     description of a requirement with one that can be used to eventually provide machine validation&quot;
+     Mehr dazu unter: &quot;https://www.loc.gov/standards/mets/profile_docs/components.html&quot; -->
+<!-- Die Kommentare sollten, sofern sie weiterhin benötigt werden, als Text in die entsprechenden Felder des Profils stehen. --> 
+<!-- Im PROFILE-Attribut muss letztendlich anstelle der genannten lokalen Adresse eine Internet-Adresse stehen, unter der man das Profil 
+     dann finden kann. --> 
+
+<mets:mets OBJID="locunihd.1234.156345692975634.0907686901" 
+    LABEL="Studie über die Sinnlosigkeit des Seins" TYPE="research project" 
+    xmlns:lc="http://www.loc.gov/mets/profiles/" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:mets="http://www.loc.gov/METS/"
+    xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd
+    http://www.w3.org/1999/xlink https://www.w3.org/1999/xlink.xsd"
+    PROFILE="file:///C:/Users/Tatjana%20Mechler/Desktop/heiarchivetest/heiProfileBasis_16.04.2018_V0.5.xml">
+   
+    <!-- Zeitpunkt an dem das METS-Dokument erstellt wurde. -->
+    <mets:metsHdr CREATEDATE="2018-03-23T10:30:00" ID="hdr000"> 
+        
+        <!-- Rollen und deren Inhaber, die mit der Administration der Metadaten und des Speicherung des Archivguts verbunden sind. -->
+        <!-- PRESERVATION: The person(s) or institution(s) responsible for preservation functions. Und! ARCHIVIST:The person(s) or institution(s) responsible for the document/collection. -->
+        <!-- Alle vordefinierte Rollen für das Attribut ROLE: &quot;CREATOR&quot;, &quot;EDITOR&quot;, &quot;ARCHIVIST&quot;, &quot;PRESERVATION&quot;, &quot;DISSEMINATOR&quot;,
+             &quot;CUSTODIAN&quot;, &quot;IPOWNER&quot;, &quot;OTHER&quot; -->
+        
+        <mets:agent ID="agent001" ROLE="PRESERVATION" TYPE="ORGANIZATION">
+            <mets:name>Universitätsrechenzentrum Heidelberg</mets:name>
+            <mets:note>Ansprechpartner für den Speichervorgang</mets:note>
+        </mets:agent>
+        
+        <mets:agent ID="agent002" ROLE="ARCHIVIST" TYPE="ORGANIZATION">
+            <mets:name>Institut für nicht-psychlogische Psychologie</mets:name>
+            <mets:note>Ansprechpartner für Fragen zum Lifecycle des Archivguts</mets:note>
+        </mets:agent>
+
+        <!-- Rollen und deren Inhaber, die mit der Erstellung des Archivguts verbunden sind. -->
+        <!-- Die Rolle AUTHOR steht hier als Beispiel für ein von uns zu definierendes Vokabular, da sie in METS für den Zweck der Erstellung des Archivguts nicht vorliegt. Könnte im METS-Profile (siehe oben) 
+            definiert werden. -->
+        <!-- Bessere Lösung - falls in METS möglich: MARC Code List for Relators: marcrelator -  Creator [cre]: A person or organization responsible for the intellectual or 
+             artistic content of a resource - siehe dazu Umsetzung in MODS: &lt;mods:role&gt; &lt;mods:roleTerm authority=&quot;marcrelator&quot; type=&quot;text&quot;&gt; Creator &lt;/mods:roleTerm&gt; 
+             &lt;/mods:role&gt; -->
+        <!-- Gehört eigentlich zu &lt;dmdSec&gt;, da es Teil der unmittelbaren Beschreibung des Archivguts ist. Diese Platzierung wäre innerhalb von &lt;dmdSec&gt;&lt;mdWrap&gt; mit einem z.B. von 
+             MODS V3.0 &quot;http://www.loc.gov/mods/v3&quot; möglich. -->    
+
+        <mets:agent ID="author001" ROLE="OTHER" TYPE="INDIVIDUAL" OTHERROLE="AUTHOR">
+            <mets:name>Freud, Sigmund</mets:name>
+            <mets:note>Erstautor des Archivguts/der Forschungsarbeit bzw. der Autor, der die Lorbeeren dafür geerntet hat</mets:note>
+        </mets:agent>
+        
+        <mets:agent ID="author002" ROLE="OTHER" TYPE="INDIVIDUAL" OTHERROLE="AUTHOR">
+            <mets:name>Marx, Karl</mets:name>
+            <mets:note>Zweitautor des Archivguts/der Forschungsarbeit bzw. der Autor, der die Forschungsarbeit verfasst hat</mets:note>
+        </mets:agent>
+        
+    </mets:metsHdr>
+    
+    
+    <mets:dmdSec ID="dmdSec001">
+    
+        <!-- DFG-Fachssystematik des dfg - Struktur der Fachkollegien und Fächer. - Liegt als JSONScript vor. - Frage der Integration. -->
+        <!-- URL bei Übernahme des xml anpassen an http://... -->
+        <mets:mdRef LOCTYPE="URL" MDTYPE="OTHER" OTHERMDTYPE="fachsys-dfg-json" xlink:href="file:/C:/Users/Tatjana%20Mechler/Desktop/heiarchivetest/dfg-fachsystematik.json"/>
+        
+      <!-- Evtl. Integration über METS-Profile (siehe oben)- falls ein xml-Schema dazu vorhanden wäre - dann entsprechend anpassen! 
+      <mets:mdWrap MDTYPE="OTHER">
+       <mets:xmlData>
+                <dfgfachsystematik:fachkollegien>Geistes- und Sozialwissenschaften</dfgfachsystematik:fachkollegien> 
+            </mets:xmlData>      
+        </mets:mdWrap> -->
+    
+        <!-- In &lt;mets:dmdSec&gt; wäre es empfehlenswert MODS V3.0 &quot;http://www.loc.gov/mods/v3&quot; zu verwenden, um den Titel, die Autoren (mit standardisiertem 
+            Vokabular - marcrelator) und die das dfg-Fachsystematik als standardisiertes Vokabular einzubinden. Es bietet sich an dieser Stelle auch an einen 
+            kleinen &quot;abstract&quot; des Archivguts und z.B. Zeitpunkt der Veröffentlichung zu sichern -->
+        <!-- Bei der Integration als standartisiertes Vokabular unter file:///C:/Users/Tatjana%20Mechler/Desktop/heiarchivetest/heiProfileBasis_Datum_Version.xml 
+            referenzietren METS-PROFILE V2.0 - http://www.loc.gov/standards/mets/profile_docs/mets.profile.v2-0.xsd
+            müsste der Eintrag voraussichtlich wie folgt aussehen:
+            
+            &lt;vocabulary ID=&quot;vc006&quot;&gt;
+            &lt;name&gt;dfg-Fachsystematik&lt-Fachkollegien;/name&gt;
+            &lt;maintenance_agency&gt;Deutsche Forschungsgemeinschaft&lt;/maintenance_agency&gt;
+            &lt;URI&gt;http://www.dfg.de/dfg_profil/gremien/fachkollegien/liste/index.jsp&lt;/URI&gt;
+            &lt;values&gt;
+                &lt;value&gt;Geistes- und Sozialwissenschaften&lt;/value&gt;
+                &lt;value&gt;Lebenswissenschaften&lt;/value&gt;
+                &lt;value&gt;Naturwissenschaften&lt;/value&gt;
+                &lt;value&gt;Ingenieurwissenschaften&lt;/value&gt;
+            &lt;/values&gt;
+            &lt;context&gt;&lt;p&gt;mets/dmdsec/mdwrap/xmldata/mods/subject/topic&lt;/p&gt;&lt;/context&gt;
+            &lt;description&gt;
+                &lt;p&gt;Integration der Fachkollegien aus der DFG-Fachsystematik.&lt;/p&gt;
+                &lt;/description&gt;
+        &lt;/vocabulary&gt; 
+        -->
+          
+        <!--  
+        <mets:mdWrap MDTYPE="MODS">
+            <mets:xmlData>
+                <mods:mods 
+                    xmlns:mods="http://www.loc.gov/mods/v3" 
+                    xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd" 
+                    ID="collpers001">
+                    <mods:titleInfo>
+                        <mods:title>Studie über die Sinnlosigkeit des Seins</mods:title>
+                    </mods:titleInfo>
+                    
+                    <mods:abstract lang="eng">A summary of the content of the resource. - Nice to have. Beispieltext: "All work 
+                    and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy."</mods:abstract>
+                    
+                    <mods:originInfo>
+                        <mods:dateIssued encoding="w3cdtf">2018-03-03</mods:dateIssued>
+                    </mods:originInfo>
+                    
+                    <mods:name ID="creatorpers001" type="personal">
+                        <mods:namePart>Freud, Sigmund</mods:namePart>
+                        <mods:namePart type="family">Freud</mods:namePart>
+                        <mods:namePart type="given">Sigmund</mods:namePart>
+                        <mods:namePart type="termsOfAddress">Prof. Dr. Dr.</mods:namePart>
+                        <mods:affiliation>Institut für nicht-psychlogische Psychologie</mods:affiliation>
+                        <mods:role>
+                            <mods:roleTerm authority="marcrelator" type="text">Creator</mods:roleTerm>
+                        </mods:role>
+                    </mods:name>
+                    
+                    <mods:name ID="creatorpers002" type="personal">
+                        <mods:namePart>Marx, Karl</mods:namePart>
+                        <mods:namePart type="family">Marx</mods:namePart>
+                        <mods:namePart type="given">Karl</mods:namePart>
+                        <mods:affiliation>Institut für nicht-psychlogische Psychologie</mods:affiliation>
+                        <mods:role>
+                            <mods:roleTerm authority="marcelator" type="text">Creator</mods:roleTerm>
+                        </mods:role>
+                    </mods:name>
+                    
+                    <mods:name ID="creatorinst001" type="corporate">
+                        <mods:namePart>Institut für nicht-psychlogische Psychologie</mods:namePart>
+                        <mods:affiliation>Universitaet Heidelberg</mods:affiliation>
+                        <mods:role>
+                            <mods:roleTerm authority="marcrelator" type="text">Creator</mods:roleTerm>
+                        </mods:role>
+                        <mods:description>Beteiligung an den Urheberrechten ... Zur Verfuegungstellung von Ressourcen - Verweis auf Lizenz etc.</mods:description>
+                    </mods:name>
+                  
+                    <mods:subject>
+                        <mods:topic authority="dfg-fachsystematik" authorityURI="file:///C:/Users/Tatjana%20Mechler/Desktop/heiarchivetest/heiProfileBasis.xml" 
+                        valueURI="fachdfg">Geistes- und Sozialwissenschaften</mods:topic>
+                    </mods:subject>
+                    
+                </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+        -->  
+
+    </mets:dmdSec>
+    
+    
+    <mets:amdSec ID="amdSec001">
+        
+        <mets:techMD ID="techTOM001">
+            <mets:mdRef ID="TOM001" LABEL="Technische und organisatorische Maßnahmen V0.1" LOCTYPE="URL"  MIMETYPE="text/html" xlink:href="seite/auf/der/TOM/beschrieben/steht/..." MDTYPE="OTHER"/> 
+        </mets:techMD>
+        
+        <mets:rightsMD ID="rightSLA001">
+            <mets:mdRef ID="SLA001" LABEL="Service-Level-Agreement V0.1" LOCTYPE="URL"  MIMETYPE="text/html" xlink:href="seite/auf/der/SLA/beschrieben/steht/..." MDTYPE="OTHER"/> 
+        </mets:rightsMD>
+        
+        <mets:rightsMD ID="rightSAG001">
+            <mets:mdRef ID="SAG001" LABEL="Submission Agreement V0.1" LOCTYPE="URL"  MIMETYPE="text/html" xlink:href="seite/auf/der/SAG/beschrieben/steht/..." MDTYPE="OTHER"/> 
+        </mets:rightsMD>
+        
+        <mets:rightsMD ID="rightSSHKey001">
+            <mets:mdWrap ID="SSH-Key-AgentID" LABEL="SSH-Key-Public-gefolgt von der AgentID in base64" MDTYPE="OTHER"  OTHERMDTYPE="SSH-Key">
+                <mets:binData>
+                    c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDM3FuU1kxV2NrSVg2VWh4YTRzOHZtRWlscGNvNWx5Nm1iTHJ1TEpZaEcrQTVGbHU0b
+                    0NKSHU4R0dSRlB3S0x2bEx2MDhjdWxBa3hPMFo4Q2NPdFh1QXBDaWVtaW5Nc3ZiMFdOeTZ4UVk2MGFjTWVxVnArRE5ZdjlOMG5ucE1STHBrL3pkMjZ2dU
+                    JHS2NiaWZ1amFRUUhrQzJDMTdXMkhoTzZlMFpaUG1zSFltUy9QNG43cEg1eXcrTXZxTkNQLzFjUGpiWnV4OW1kbTRraTcyQzI1Y1k0TWlmTXQ0R0ZWOSt
+                    BMXZQN2J4YW5EazdNajg4Zm9neklpcUtEdmliY2pTRQ0KRVkxRzRqU2VTTm5namV5UGhJMnlKUVdwYmp3Wkkzc3dVTiszc3dFYm5qZ1VpWTdWa2JPcStie
+                    Xh2NlhKcVB0S3Bkd2szRjBWb0hZSFBvTVZWTDFWIGFnZW50MDAx
+                </mets:binData>
+            </mets:mdWrap>
+        </mets:rightsMD>
+        
+    </mets:amdSec>
+    
+    
+    <mets:fileSec>
+        
+        <!-- Das Archivgut ist unter https://example.com/some/path/some/nutzdaten.iso abgelegt. -->
+        <!-- Als MASTER dient das ISO-Image -->
+        <!-- Mit zwei CHECKSUMTYPES: SHA-256 und MD5 -->
+        <!-- Und/Oder mit DOI: &lt;mets:FLocat LOCTYPE="DOI" xlink:href="10.1371/journal.pbio.0020449" xlink:title="Studie über die Sinnlosigkeit des Seins"/&gt; -->
+        <!-- size in Byte -->
+        
+        <!-- Fall1 -->
+        <!-- Sollte das ISO-Image komprimiert werden - siehe Fall2 -->
+        <mets:fileGrp ID="filegrpMast001" USE="MASTER">
+            
+            <mets:file ID="master001-1234567-iso-sha" USE="SHA-256" GROUPID="master001" ADMID="author001 author002 techTOM001 rightSLA001 rightSAG001 rightSSHKey001" MIMETYPE="application/iso" 
+                CHECKSUMTYPE="SHA-256" CHECKSUM="C09AA98965F751812353B1F2ED1663CA22A4B33EB34093605A4B062A24383ADF" SIZE="6423283">
+                <mets:FLocat LOCTYPE="URL" xlink:href="https://example.com/some/path/some/nutzdaten1.iso" xlink:title="Studie über die Sinnlosigkeit des Seins"/> 
+            </mets:file>
+            
+            <mets:file ID="master001-1234567-iso-md" USE="MD5" GROUPID="master001" ADMID="author001 author002 techTOM001 rightSLA001" MIMETYPE="application/iso" 
+                CHECKSUMTYPE="MD5" CHECKSUM="36b03197ad066cd719906c55eb68ab8d" SIZE="6423283">
+                <mets:FLocat LOCTYPE="URL" xlink:href="https://example.com/some/path/some/nutzdaten1.iso" xlink:title="Studie über die Sinnlosigkeit des Seins"/>
+            </mets:file>
+           
+         <!-- Für ein ISO-Image kann noch ein zweites hinzugefügt werden, falls die Nutzdaten zu groß für ein ISO-Image sind - zur Strukturierung GROUPID:
+             
+            <mets:file ID="master002-1234567-sha" USE="SHA-256" GROUPID="master002" ADMID="author001 author002 techTOM001 rightSLA001 rightSSHKey001" MIMETYPE="application/iso" 
+                CHECKSUMTYPE="SHA-256" CHECKSUM="C09AA98965F751812353B1F2ED1663CA22A4B33EB34093605A4B062A24383ADF" SIZE="6423283">
+                <mets:FLocat LOCTYPE="URL" xlink:href="https://example.com/some/path/some/nutzdaten2.iso" xlink:title="Studie über die Sinnlosigkeit des Seins"/>         
+            </mets:file>
+            
+            <mets:file ID="master002-1234567-md" USE="MD5" GROUPID="master002" ADMID="author001 author002 techTOM001 rightSLA001" MIMETYPE="application/iso" 
+                CHECKSUMTYPE="MD5" CHECKSUM="36b03197ad066cd719906c55eb68ab8d" SIZE="6423283">
+                <mets:FLocat LOCTYPE="URL" xlink:href="https://example.com/some/path/some/nutzdaten2.iso" xlink:title="Studie über die Sinnlosigkeit des Seins"/>
+            </mets:file> -->
+            
+        </mets:fileGrp>
+        
+        <!-- Fall2 -->
+        <!-- Man erhält das tar vom Nutzer und speichert es als tar.gz ab und der Nutzer erhält das tar wieder zurück. Das finale Entpacken letztendlich liegt in der Verantwortung des Nutzers. -->
+        <!-- Soll auf das Komprimieren verzichtet werden - siehe Beispiel ISO-Image. -->
+        <!-- Für Winzip siehe Fallbeispiel iso-image - Begründung: Es liegt bereits im komprimierten Format vor. -->
+        <mets:fileGrp ID="filegrpMast002" USE="Master">
+            <mets:file ID="master003-1234567-targz-sha" USE="SHA-256" GROUPID="master003" ADMID="author001 author002 techTOM001 rightSLA001 rightSAG001 rightSSHKey001" MIMETYPE="application/tar.gz" 
+                CHECKSUMTYPE="SHA-256" CHECKSUM="C09AA98965F751812353B1F2ED1663CA22A4B33EB34093605A4B062A24383ADF" SIZE="64232836">
+                <mets:FLocat LOCTYPE="URL" xlink:href="https://example.com/some/path/some/nutzdaten1.tar.gz" xlink:title="Studie über die Sinnlosigkeit des Seins"/> 
+                <!-- Beschreibung wie Datei behandelt werden muss, um sie wieder in einen lesbaren Zustand zu bringen. -->
+                <!-- Da wir das Archivgut bereits als tar-Datei erhalten, kann dieses Archiv optional komprimiert werden. -->
+                <mets:transformFile TRANSFORMTYPE="decompression" TRANSFORMALGORITHM="gunzip" TRANSFORMORDER="1"/>
+                <mets:file ID="master003-1234567-tar-sha" CHECKSUMTYPE="SHA-256" CHECKSUM="B09AA98965F7436B1F2ED1663CA263434093605A4B062A24383ADF" SIZE="164232836">
+                    <mets:FLocat LOCTYPE="URL" xlink:href="file:nutzdaten1.tar" xlink:title="Studie über die Sinnlosigkeit des Seins"/>     
+                </mets:file>
+            </mets:file>
+            
+            <mets:file ID="master003-1234567-targz-md" USE="MD5" GROUPID="master003" ADMID="author001 author002 techTOM001 rightSLA001 rightSSHKey001" MIMETYPE="application/tar.gz" 
+                CHECKSUMTYPE="MD5" CHECKSUM="36b03197ad066cd719906c55eb68ab8d" SIZE="6423283">
+                <mets:FLocat LOCTYPE="URL" xlink:href="https://example.com/some/path/some/nutzdaten1.tar.gz" xlink:title="Studie über die Sinnlosigkeit des Seins"/>
+                <!-- Beschreibung wie Datei behandelt werden muss, um sie wieder in einen lesbaren Zustand zu bringen. -->
+                <!-- Da wir das Archivgut bereits als tar-Datei erhalten, kann dieses Archiv optional komprimiert werden. -->
+                <mets:transformFile TRANSFORMTYPE="decompression" TRANSFORMALGORITHM="gunzip" TRANSFORMORDER="1"/>
+                <mets:file ID="master003-1234567-tar-md5" CHECKSUMTYPE="SHA-256" CHECKSUM="B09AA98965F7436B1F2ED1663CA263434093605A4B062A24383ADF" SIZE="164232836">
+                    <mets:FLocat LOCTYPE="URL" xlink:href="file:nutzdaten1.tar" xlink:title="Studie über die Sinnlosigkeit des Seins"/>     
+                </mets:file>
+            </mets:file>
+            
+            
+        </mets:fileGrp>
+        
+        
+        <!-- Fall3 -->
+        <!-- Unabhängig davon welches Kopierverfahren gewählt wird, es wird eine 1 zu 1-Kopie in eine Datei gemacht. Restliches Vorgehen siehe ISO-Image (Fall1). -->
+        <!-- Eine Komprimierung ist in diesem Fall zu empfehlen. -->
+        
+        <!-- Fall 3a: Der Kunde bringt die Festplatte mit und der Dienstbetreuer des Rechenzentrums fasst diese zu einem Archiv zusammen. Das weitere Vorgehen ist im Fall2 geregelt. -->
+        <!-- Wahl von winzip oder targz - Anhängig von Dateisystem -->
+        
+    </mets:fileSec>
+    
+    
+    
+    
+    <!-- Die structMap wird für den BLOB zwar zunächst für die Syntaxkonformität innerhalb des METS-Dokuments nicht benötigt, ist aber evtl. 
+         vorteilhaft, sofern das ISO aufgeteilt werden muss. Kapazitätsgrenzen von CD, DVD, Blu-ray etc. -->
+    
+    <mets:structMap ID="strucMap001">
+       
+        <mets:div DMDID="dmdSec001" LABEL="Collection" TYPE="blob">
+            
+            <!-- Fall1/Fall3/Fall3a -->
+                    <mets:fptr FILEID="master001-1234567-iso-sha"/>
+                    <mets:fptr FILEID="master001-1234567-iso-md"/>
+            
+              <!--  Für ein ISO-Image kann noch ein zweites hinzugefügt werden, falls die Nutzdaten zu groß für ein ISO-Image sind                   
+                    <mets:fptr FILEID="master002-1234567-sha"/>
+                    <mets:fptr FILEID="master002-1234567-md"/> -->
+            
+            <!-- Fall2 -->
+                    <mets:fptr FILEID="master003-1234567-targz-sha"/>
+                    <mets:fptr FILEID="master003-1234567-targz-md"/>
+            
+        </mets:div>
+    </mets:structMap>            
+ 
+    
+</mets:mets>
